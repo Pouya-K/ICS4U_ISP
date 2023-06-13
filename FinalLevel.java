@@ -80,7 +80,6 @@ public class FinalLevel {
     private long startTime;
     /** Boolean to know whether you should be asking for their name. */
     private boolean rightName = false;
-    private boolean moveUp = false, moveDown = false, moveLeft = false, moveRight = false;
 
     /**
      * {@link FinalLevel} Constructor
@@ -101,7 +100,7 @@ public class FinalLevel {
         frame.add(drawing);
         frame.setVisible(true);
 
-        player = new Player(600, 450, 1);
+        player = new Player(600, 450, 10);
 
         //start of program
         startTime = System.currentTimeMillis();
@@ -165,47 +164,31 @@ public class FinalLevel {
                 switch (keyCode) {
                     case "w":
                         if (playerY > 107) {
-                            moveUp = true;
-                           // player.moveUp();
+                            player.moveUp();
                             direction = "back";
                             playerImage = !playerImage;
-                        }
-                        else{
-                            moveUp = false;
                         }
                         break;
                     case "s":
                         if (playerY < 750) {
-                            moveDown = true;
-                          //  player.moveDown();
+                            player.moveDown();
                             direction = "front";
                             playerImage = !playerImage;
-                        }
-                        else{
-                            moveDown = false;
                         }
                         break;
                     case "a":
                         if (playerX > 50) {
-                            moveLeft = true;
-                         //   player.moveLeft();
+                            player.moveLeft();
                             direction = "left";
                             playerImage = !playerImage;
-                        }
-                        else{
-                            moveLeft = false;
                         }
                         break;
 
                     case "d":
                         if (playerX < 1150) {
-                            moveRight = true;
-                          //  player.moveRight();
+                            player.moveRight();
                             direction = "right";
                             playerImage = !playerImage;
-                        }
-                        else{
-                            moveRight = false;
                         }
                         break;
                 }
@@ -214,16 +197,6 @@ public class FinalLevel {
                 else insideHouse = false;
                 drawing.repaint();
             }
-        }
-        public void keyReleased(KeyEvent e){
-            String keyCode = (e.getKeyChar()+"").toLowerCase();
-            switch (keyCode) {
-                case "w" -> moveUp = false;
-                case "s" -> moveDown = false;
-                case "a" -> moveLeft = false;
-                case "d" -> moveRight = false;
-            }
-            drawing.repaint();
         }
     }
 
@@ -354,10 +327,6 @@ public class FinalLevel {
          * @param g  the <code>Graphics</code> context in which to paint
          */
         public void paint(Graphics g){
-            if(moveUp) player.moveUp();
-            if(moveDown) player.moveDown();
-            if(moveLeft) player.moveLeft();
-            if(moveRight) player.moveRight();
             //static drawings
 
             //background
@@ -611,6 +580,9 @@ public class FinalLevel {
                     while(!rightName){
                         String name = JOptionPane.showInputDialog(frame, "Enter your username. It may not include a space.");
                         if(name == null){
+                            g.setColor(Color.black);
+                            g.fillRect(0,0,getWidth(), getHeight());
+                            repaint();
                             break;
                         }
                         rightName = processUsername(name);
@@ -621,9 +593,9 @@ public class FinalLevel {
                                 PrintWriter writer = new PrintWriter(temp);
                                 writer.println(name + " " + numOfNights);
                                 writer.close();
+                                repaint();
                             }
                             catch (IOException e){}
-                            repaint();
                         }
                     }
                     if(rightName){
