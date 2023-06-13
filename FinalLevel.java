@@ -447,6 +447,7 @@ public class FinalLevel {
                 if(insideHouse){
                     //Taking damage each night
                     int damage = 15 + 10*numOfNights;
+                    if(damage>70) damage = 70;
                     house.removeDurability(damage);
                     //Losing materials from your house after each night
                     int concreteLost = damage/20;
@@ -588,7 +589,7 @@ public class FinalLevel {
                         rightName = processUsername(name);
                         if(rightName){
                             try{
-                                Leaderboard.readData();
+                                Leaderboard.addPerson(name, numOfNights);
                                 FileWriter temp = new FileWriter("leaderboard.txt", true);
                                 PrintWriter writer = new PrintWriter(temp);
                                 writer.println(name + " " + numOfNights);

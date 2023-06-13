@@ -8,6 +8,7 @@
  */
 public class Game {
     public static void main(String[] args) {
+        Leaderboard.readData();
         new SplashScreen();
     }
 }

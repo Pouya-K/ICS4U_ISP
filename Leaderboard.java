@@ -41,7 +41,6 @@ public class Leaderboard {
             d.printStackTrace();
         }
         //reading all the info from the file
-        readData();
         sortData(); //sorting data
         //Creating the frame and adding our drawing.
         frame.setSize(1200, 800);
@@ -89,6 +88,16 @@ public class Leaderboard {
             }
             if(!swapped) break; //no swap has occurred - arraylist is sorted
         }
+    }
+
+    /**
+     * Static method to add a person to the arraylist of leaderboard (able to be accessed by other classes)
+     * @param s Name of person
+     * @param n Score of person
+     */
+    public static void addPerson(String s, int n){
+        names.add(s);
+        scores.add(n);
     }
 
     /**
